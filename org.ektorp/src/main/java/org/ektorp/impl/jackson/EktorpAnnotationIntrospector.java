@@ -46,6 +46,7 @@ public class EktorpAnnotationIntrospector extends NopAnnotationIntrospector {
 		return names.contains(m.getName());
 	}
 
+	// deprecated as of Jackson 2.6 and not called at all by 2.7
 	@Override
 	public String[] findPropertiesToIgnore(Annotated ac) {
 		if(ac instanceof AnnotatedClass){
@@ -53,7 +54,16 @@ public class EktorpAnnotationIntrospector extends NopAnnotationIntrospector {
 		}
 		return super.findPropertiesToIgnore(ac);
 	}
-	
+
+	// deprecated as of Jackson 2.8 and not called at all by 2.9
+	@Override
+	public String[] findPropertiesToIgnore(Annotated ac, boolean forSerialization) {
+		if(ac instanceof AnnotatedClass){
+			return findPropertiesToIgnore((AnnotatedClass) ac);
+		}
+		return super.findPropertiesToIgnore(ac, forSerialization);
+	}
+
     public String[] findPropertiesToIgnore(AnnotatedClass ac) {
     	List<String> ignoreFields = null;
     	for (AnnotatedField f : ac.fields()) {
